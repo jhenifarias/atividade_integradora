@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulário de Login</title>
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./style.css">
+
   </head>
+
   <body>
     <div class="form-container">
-      <h1>Faça o seu login</h1>
-      <div class="input-username">
+        <form action="">
+      <h1>FAÇA O SEU LOGIN</h1>
+      <div class="input-container">
         <label for="name" class="name">Login</label>
         <input
           type="text"
-          placeholder="Digite seu nome"
+          placeholder="Digite seu e-mail ou nome de usuário"
           class="name"
-          name="name"/>
+          name="name">
       </div>
 
-      <div class="input-password">
+      <div class="input-container">
         <label for="password" class="password">Senha</label>
         <input
           type="password"
@@ -27,17 +30,16 @@
           password="password"/>
       </div>
 
-      <div class="options">
+      <div class="options-container">
         <div class="options-checkbox">
           <input type="checkbox" name="remember" id="remember"/>
           <label for="remember">Lembre-me</label>
         </div>
-        <a href="" class="email">Criar uma conta</a>
+        <a href="" class="create-account">Criar uma conta</a>
       </div>
 
-      <div class="input-subit">
-        <input type="submit" value="Login"/>
-      </div>
+        <input type="submit" value="Login">
+      </form>
     </div>
 
     <script type="text/javascript" src="./app.js"></script>
