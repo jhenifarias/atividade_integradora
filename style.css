@@ -23,6 +23,7 @@ form h1 {
   font-family: 'Roboto', sans-serif;
   font-size: 26px;
   text-align: center;
+  text-transform: uppercase;
 }
 
 form .input-container {
@@ -38,6 +39,7 @@ form .input-container input, input[type="submit"] {
   border-radius: 25px;
   height: 40px;
   color: rgb(0, 0, 0);
+
 }
 
 input {
@@ -49,6 +51,15 @@ input[type="submit"] {
   background-color: #cf7712;
   color: #000000;
   font-weight: bold;  
+  text-transform: uppercase;
+}
+
+form .input-container input::placeholder {
+  font-size: 15px;
+}
+
+.input-container {
+  text-align: center;
 }
 
 form .input-container input {
