@@ -1,0 +1,10 @@
+/* paleta de cores:
+azul #040928;
+amarelo #cf7712;
+branco #fffff; */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;700&display=swap');
+
+body {
+  background-color: #000;
+}
