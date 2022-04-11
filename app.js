@@ -1,79 +1,45 @@
+/**
+ * Captura e validação dos dados do usuário enviado pelo formulário.
+ * @param {*} eventoDoFormulario Objeto de evento do formulário.
+ */
+ function validarCredenciaisDoUsuario(eventoDoFormulario) {
+
+    // Para não atualizar a página.
+    eventoDoFormulario.preventDefault();
+
+    // Destruturando/Separando os campos e-mail e senha do formulário.
+    let [email, senha] = eventoDoFormulario.target;
+
+    // Armazena e-mail e senha em variáveis.
+    let emailDoUsuario = email.value;
+    let senhaDoUsuario = senha.value;
+
+    // Cria um objeto contendo as credenciais do usuário.
+    let credenciaisDoUsuario = {
+        email: emailDoUsuario,
+        password: senhaDoUsuario
+    }
+
+    // Requisição de autenticação do usuário.
+    loginUsuario(credenciaisDoUsuario);
+
+}
 
 
-/* 
-    Métodos HTTP 
-    
-        - Get: Pedir o retorno de um objeto ou mais.
-        - Post: Criar um novo objeto.
-        - Put: Atualizar o objeto.
-        - Path: Atualizar parcialmente do objeto.
-        - Delete: Deletar o objeto.
-
+/**
+ * Base do endereço da API.
+ * @constant API_URL
+ * @type string
 */
+const API_URL = 'https://ctd-todo-api.herokuapp.com/v1';
 
-var API_URL = 'https://ctd-todo-api.herokuapp.com/v1';
-
-var user = {
-    "firstName": "Fulano",
-    "lastName": "Silva",
-    "email": "fulano.silva@gmail.com",
-    "password": "12345"
-  }
-
-criarUmUsuario(user);
-
-var login = {
-    "email": "fulano.silva@gmail.com",
-    "password": "12345"
-}
-
-loginUsuario(login);
-
-// GET
-pedirTodasTarefas();
-
-// GET
-var idDaTarefa = 1;
-
-pedirUmaTarefa(1);
-
-// PUT
-var novaTarefa = {
-    id: 1,
-    title: 'foo',
-    body: 'bar',
-    userId: 1,
-}
-
-var corpodaTarefa = {
-    "description": "Aprender Javascript",
-    "completed": false
-  }
-  
-criarUmaTarefa(corpodaTarefa)
-
-substituirUmaTarefa(idDaTarefa, novaTarefa);
-
-// PATCH
-var TarefaAtualizada = {
-    title: 'foo'
-}
-
-atualizarUmaTarefa(idDaTarefa, TarefaAtualizada);
-
-// DELETE
-deletarUmaTarefa(idDaTarefa);
-
+/**
+ * Service de autenticação do usuário.
+ * @param credenciaisDoUsuario Objeto contendo e-mail e senha.
+ * @type { email: string, password: string } 
+ */
 function criarUmUsuario(usuario) {
 
-    /*
-        Configurações do pedido:
-
-        - method: Qual será o método utilizado? Get, Post, Put, Delete... 
-        - body: Quais informações deseja enviar? 
-        - headers: Quais os formatos e configurações do que deseja enviar?
-
-    */
     var configuracoes = {
         method: 'POST',
         body: JSON.stringify(usuario),
@@ -101,21 +67,13 @@ function criarUmUsuario(usuario) {
         });
 }
 
-function loginUsuario(login) {
+function loginUsuario(eventoDoFormulario) {
 
-    /*
-        Configurações do pedido:
-
-        - method: Qual será o método utilizado? Get, Post, Put, Delete... 
-        - body: Quais informações deseja enviar? 
-        - headers: Quais os formatos e configurações do que deseja enviar?
-
-    */
     var configuracoes = {
         method: 'POST',
-        body: JSON.stringify(login),
+        body: JSON.stringify(eventoDoFormulario),
         headers: {
-            'Content-type': 'application/json; charset=UTF-8',
+            'Content-Type': 'application/json; charset=UTF-8',
         },
     }
 
@@ -132,23 +90,54 @@ function loginUsuario(login) {
             return JSON;
         })
         .then(function (respostaDoServidorEmJSON) {
+
+            let tokenDoUsuario = respostaDoServidorEmJSON.jwt;
             
             // Resultado da promessa convertida em JSON. 
-            console.log('POST loginUsuario() \n', respostaDoServidorEmJSON)
-            return respostaDoServidorEmJSON;
+            localStorage.setItem('token', tokenDoUsuario);
+
+             pedirInformacoesDoUsuario(tokenDoUsuario);
         });
+}
+
+
+/**
+ * Pedi os dados de cadastro do usuário.
+ * @param {string} tokenDoUsuario Token JWT da autenticação do usuário.
+ */
+function pedirInformacoesDoUsuario(tokenDoUsuario) {
+
+    // Configurações da requisição GET.
+    let configuracoes = {
+        method: 'GET',
+        headers: {
+            'authorization': tokenDoUsuario
+        },
+    }
+
+    // Requisição para retorno dos dados de cadastro do usuário.
+    fetch(`${API_URL}/users/getMe/`, configuracoes)
+        .then(function (respostaDoServidor) {
+                
+            // Retorno apenas dos dados convertidos em JSON.
+            let JSON = respostaDoServidor.json();
+
+            // Retorno da promessa convertida em JSON.
+            return JSON;
+        })
+        .then(function (respostaDoServidorEmJSON) {
+            
+            // Apresentando resultado final no console.log().
+            console.log(`GET pedirInformacoesDoUsuario() ${JSON.stringify(respostaDoServidorEmJSON)}`);
+
+            pedirTodasTarefas();
+
+        });
+
 }
 
 function criarUmaTarefa(corpoDaTarefa) {
 
-    /*
-        Configurações do pedido:
-
-        - method: Qual será o método utilizado? Get, Post, Put, Delete... 
-        - body: Quais informações deseja enviar? 
-        - headers: Quais os formatos e configurações do que deseja enviar?
-
-    */
     var configuracoes = {
         method: 'POST',
         body: JSON.stringify(corpoDaTarefa),
@@ -178,9 +167,17 @@ function criarUmaTarefa(corpoDaTarefa) {
 }
 
 function pedirTodasTarefas() {
+    
+        // Configurações da requisição GET.
+    let configuracoes = {
+        method: 'GET',
+        headers: {
+            'authorization': localStorage.getItem('token')
+        },
+    }
 
     // URL(https://jsonplaceholder.typicode.com/posts)
-    fetch(`${API_URL}/tasks`)
+    fetch(`${API_URL}/tasks`, configuracoes)
         .then(function (respostaDoServidor) {
             
             // Retorno apenas dos dados convertidos em JSON.
@@ -198,6 +195,13 @@ function pedirTodasTarefas() {
 
 function pedirUmaTarefa(idDaTarefa) {
     
+    let configuracoes = {
+        method: 'GET',
+        headers: {
+            'authorization': tokenDoUsuario
+        },
+    }
+
     // URL(https://jsonplaceholder.typicode.com/posts/1)
     fetch(`${API_URL}/tasks/${idDaTarefa}`)
         .then(function (respostaDoServidor) {

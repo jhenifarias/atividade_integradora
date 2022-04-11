@@ -10,35 +10,35 @@
 
   <body>
     <div class="form-container">
-        <form action="">
-      <h1>Faça seu login</h1>
-      <div class="input-container">
-        <label for="name" class="name">Login</label>
-        <input
-          type="text"
-          placeholder="Digite seu e-mail ou nome de usuário"
-          class="name"
-          name="name">
-      </div>
+        <form method="post" onsubmit="validarCredenciaisDoUsuario(event)">
+            <h1>Faça seu login</h1>
+            <div class="input-container">
+              <label for="name" class="name">Login</label>
+              <input
+                type="text"
+                placeholder="Digite seu e-mail ou nome de usuário"
+                class="name"
+                name="name">
+            </div>
 
-      <div class="input-container">
-        <label for="password" class="password">Senha</label>
-        <input
-          type="password"
-          placeholder="Senha com 8 dígitos"
-          class="password"
-          password="password"/>
-      </div>
+            <div class="input-container">
+              <label for="password" class="password">Senha</label>
+              <input
+                type="password"
+                placeholder="Senha com 8 dígitos"
+                class="password"
+                password="password"/>
+            </div>
 
-      <div class="options-container">
-        <div class="options-checkbox">
-          <input type="checkbox" name="remember" id="remember"/>
-          <label for="remember">Lembre-me</label>
-        </div>
-        <a href="atividade-integradora/src/index.html" class="create-account">Criar uma conta</a>
-      </div>
+            <div class="options-container">
+              <div class="options-checkbox">
+                <input type="checkbox" name="remember" id="remember"/>
+                <label for="remember">Lembre-me</label>
+              </div>
+              <a href="atividade-integradora/src/index.html" class="create-account">Criar uma conta</a>
+            </div>
 
-        <input type="submit" value="Entrar">
+            <input type="submit" value="Entrar">
       </form>
     </div>
 
