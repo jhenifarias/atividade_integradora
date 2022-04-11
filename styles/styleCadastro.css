@@ -36,7 +36,7 @@ form .input-container {
   font-weight: bold;
 }
 
-form .input-container input, input[type="submit"] {
+form .input-container input, input[type="submit"], #btnCadastrar {
   width: 100%;
   border-radius: 25px;
   height: 40px;
@@ -47,7 +47,7 @@ input {
   color: #040928;
 }
 
-input[type="submit"] {
+input[type="submit"], #btnCadastrar {
   border: 0;
   background-color: #cf7712;
   color: #000000;
@@ -59,7 +59,7 @@ form .input-container input::placeholder {
   font-size: 15px;
 }
 
-.input-container {
+.input-container, #btnCadastrar{
   text-align: center;
 }
 
