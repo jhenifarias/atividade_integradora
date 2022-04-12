@@ -11,6 +11,16 @@
 
 */
 
+function redirecionarPagina() {
+    document.getElementById('btnLogar')
+    .addEventListener('click', function () {
+        var URL_LISTA = "/list.html";
+        window.location.pathname = URL_LISTA;
+    });
+};
+
+redirecionarPagina()
+
 var API_URL = 'https://ctd-todo-api.herokuapp.com/v1';
 
 var user = {
@@ -337,7 +347,10 @@ function deletarUmaTarefa(idDaTarefa) {
 // Eventos
 
 document.getElementById('btnLogar')
-    .addEventListener('click', logarUser)
+    .addEventListener('click', function () {
+        logarUser();
+        redirecionarPagina();
+    })
 
-document.getElementById('btnCadastrar')
-    .addEventListener('click', cadastrarUser)
+// document.getElementById('btnCadastrar')
+//     .addEventListener('click', cadastrarUser)

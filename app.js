@@ -67,6 +67,11 @@ function criarUmUsuario(usuario) {
         });
 }
 
+function redirecionarPagina() {
+    paginatual = window.location.href;
+    window.location.replace(`${paginatual}/atividade-integradora/list/index.html`);
+};
+
 function loginUsuario(eventoDoFormulario) {
 
     var configuracoes = {
