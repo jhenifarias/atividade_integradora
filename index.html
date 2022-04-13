@@ -12,7 +12,7 @@
 
   <body>
     <div class="form-container">
-        <form action="">
+        <form method="post" onsubmit="validarCredenciaisDoUsuario(event)">
       <h1>Faça seu login</h1>
       <div class="input-container">
         <label for="name" class="name">Login</label>
@@ -42,7 +42,7 @@
         <a href="/cadastro.html" class="create-account">Criar uma conta</a>
       </div>
 
-        <input id="btnLogar" type="button" value="Entrar">
+        <input id="btnLogar" type="submit" value="Entrar">
       </form>
     </div>
 
