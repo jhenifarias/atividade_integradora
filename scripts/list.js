@@ -39,7 +39,7 @@ function infoDosUser(){
             
             // Apresentando resultado final no console.log().
             console.log(`GET pedirInformacoesDoUsuario() ${JSON.stringify(respostaDoServidorEmJSON)}`);
-
+            pedirTodasTarefas();
         });
 
 }
@@ -70,10 +70,29 @@ function pedirTodasTarefas() {
             
             // Resultado da promessa convertida em JSON. 
             console.log('GET pedirTodasTarefas() \n', respostaDoServidorEmJSON)
+            criarLista(respostaDoServidorEmJSON)
         });
 }
 
-pedirTodasTarefas()
+function criarLista(listaDeTarefas) {
+    let listaHTML = document.querySelector("#listaTarefas");
+
+    listaHTML.innerHTML = ''
+
+    listaDeTarefas.map(function (publicacao) {
+        
+        listaHTML.style = "color: white"
+
+        listaHTML.innerHTML +=
+            `<li>
+                ${publicacao.description}
+                ${' - '}
+                ${publicacao.createdAt}
+            </li>`
+        
+    });
+
+}
 
 function criarUmaTarefa(corpoDaTarefa) {
 
@@ -112,11 +131,12 @@ function adcTarefa(){
         "description": document.getElementById('descTarefa').value,
         "completed": false,
         "userId": 1,
-        "createdAt": "2021-06-30T22:53:09.549Z"
+        "createdAt": Date.now
       }
 
       criarUmaTarefa(corpoDaTarefa)
       limparCampo()
+      pedirTodasTarefas();
 }
 
 const limparCampo = ()=>{
