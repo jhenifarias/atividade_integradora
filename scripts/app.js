@@ -11,6 +11,7 @@
 
 */
 
+
 function redirecionarPagina() {
     document.getElementById('btnLogar')
     .addEventListener('click', function () {
@@ -227,8 +228,21 @@ function pedirTodasTarefas() {
         .then(function (respostaDoServidorEmJSON) {
             
             // Resultado da promessa convertida em JSON. 
-            console.log('GET pedirTodasTarefas() \n', respostaDoServidorEmJSON)
+            criarLista(respostaDoServidorEmJSON);
         });
+}
+
+function criarLista(listaDeTarefas) {
+    listaDeTarefas.map(function (publicacao) {
+        let listaHTML = document.querySelector("listaTarefas");
+
+        listaHTML.innerHTML +=
+            <li>
+                ${publicacao.description}
+            </li>
+        
+    });
+
 }
 
 function pedirUmaTarefa(idDaTarefa) {
@@ -349,7 +363,6 @@ function deletarUmaTarefa(idDaTarefa) {
 document.getElementById('btnLogar')
     .addEventListener('click', function () {
         logarUser();
-        redirecionarPagina();
     })
 
 // document.getElementById('btnCadastrar')
