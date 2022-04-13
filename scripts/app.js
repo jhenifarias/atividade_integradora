@@ -1,13 +1,9 @@
-
-function redirecionarPagina() {
-        var URL_LISTA = "/list.html";
-        window.location.pathname = URL_LISTA;
-};
-
 /**
  * Captura e validação dos dados do usuário enviado pelo formulário.
  * @param {*} eventoDoFormulario Objeto de evento do formulário.
  */
+
+
  function validarCredenciaisDoUsuario(eventoDoFormulario) {
 
     // Para não atualizar a página.
@@ -76,25 +72,25 @@ const API_URL = 'https://ctd-todo-api.herokuapp.com/v1';
         })
         .then(function (respostaDoServidorEmJSON) {
             
-            if (respostaDoServidorEmJSON.message != null) {
-                throw respostaDoServidorEmJSON;
-            }
-
+    
             let tokenDoUsuario = respostaDoServidorEmJSON.jwt;
             // Resultado da promessa convertida em JSON. 
-            localStorage.setItem('token', tokenDoUsuario)
+            localStorage.setItem('token', tokenDoUsuario);
+            pedirInformacoesDoUsuario(tokenDoUsuario);
             redirecionarPagina();
+            
         })
         .catch(function(Error) { 
             console.log('Erro ao autenticar: ' + Error.message)}
         );
 }
 
-/**
+
+ /**
  * Pedi os dados de cadastro do usuário.
  * @param {string} tokenDoUsuario Token JWT da autenticação do usuário.
  */
- function pedirInformacoesDoUsuario(tokenDoUsuario) {
+  function pedirInformacoesDoUsuario(tokenDoUsuario) {
 
     // Configurações da requisição GET.
     let configuracoes = {
@@ -115,6 +111,10 @@ const API_URL = 'https://ctd-todo-api.herokuapp.com/v1';
             return JSON;
         })
         .then(function (respostaDoServidorEmJSON) {
+
+            
+            localStorage.setItem('@User', respostaDoServidorEmJSON)
+
             
             // Apresentando resultado final no console.log().
             console.log(`GET pedirInformacoesDoUsuario() ${JSON.stringify(respostaDoServidorEmJSON)}`);
@@ -123,103 +123,19 @@ const API_URL = 'https://ctd-todo-api.herokuapp.com/v1';
 
 }
 
-// CRUD - CRIAR USUARIO
-function cadastrarUser (){
-    // Função é acionada no DOM pega valores do input e aciona a função CriarUmUsuario passando a const usuario
-    const usuario = {
-        firstName: document.getElementById('name').value,
-        lastName: document.getElementById('lastName').value,
-        email: document.getElementById('email').value,
-        password: document.getElementById('password').value     
-     }
-     criarUmUsuario(usuario)
-}
 
-function criarUmUsuario(usuario) {
 
-    var configuracoes = {
-        method: 'POST',
-        body: JSON.stringify(usuario),
-        headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-        },
-    }
-    // API_URL('https://ctd-todo-api.herokuapp.com/v1')
-    fetch(`${API_URL}/users/`, configuracoes)
-        .then(function (respostaDoServidor) {
-                
-            // Retorno apenas dos dados convertidos em JSON.
-            var JSON = respostaDoServidor.json();
-            // Nota: Você pode ter acesso ao corpo da informação sem convertê-la:
-            // respostaDoServidor.body(); 
 
-            // Retorno da promessa convertida em JSON.
-            return JSON;
-        })
-        .then(function (respostaDoServidorEmJSON) {
-            
-            // Resultado da promessa convertida em JSON.
-            console.log('POST criarUmUsuario() \n', respostaDoServidorEmJSON)
-        });
-}
 
+function redirecionarPagina() {
+    var URL_LISTA = "/list.html";
+    window.location.pathname = URL_LISTA;
+};
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function criarUmaTarefa(corpoDaTarefa) {
 
-    var configuracoes = {
-        method: 'POST',
-        body: JSON.stringify(corpoDaTarefa),
-        headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-        },
-    }
-    console.log(configuracoes);
 
-    // URL(https://jsonplaceholder.typicode.com/posts)
-    fetch(`${API_URL}/tasks/`, configuracoes)
-        .then(function (respostaDoServidor) {
-                
-            // Retorno apenas dos dados convertidos em JSON.
-            var JSON = respostaDoServidor.json();
-            // Nota: Você pode ter acesso ao corpo da informação sem convertê-la:
-            // respostaDoServidor.body(); 
 
-            // Retorno da promessa convertida em JSON.
-            return JSON;
-        })
-        .then(function (respostaDoServidorEmJSON) {
-            
-            // Resultado da promessa convertida em JSON. 
-            console.log('POST criarUmaTarefa() \n', respostaDoServidorEmJSON)
-        });
-}
-
-function pedirTodasTarefas() {
-
-    let configuracoes = {
-        method: 'GET',
-        headers: {
-            'authorization': localStorage.getItem('token')
-        },
-    }
-
-    // URL(https://jsonplaceholder.typicode.com/posts)
-    fetch(`${API_URL}/tasks`, configuracoes)
-        .then(function (respostaDoServidor) {
-            
-            // Retorno apenas dos dados convertidos em JSON.
-            var JSON = respostaDoServidor.json();
-
-            // Retorno da promessa convertida em JSON.
-            return JSON;
-        })
-        .then(function (respostaDoServidorEmJSON) {
-            
-            // Resultado da promessa convertida em JSON. 
-            console.log('GET pedirTodasTarefas() \n', respostaDoServidorEmJSON)
-        });
-}
 
 function pedirUmaTarefa(idDaTarefa) {
     
@@ -325,11 +241,3 @@ function deletarUmaTarefa(idDaTarefa) {
         });
 
 }
-
-// Eventos
-
-// document.getElementById('btnLogar')
-//     .addEventListener('click', logarUser)
-
-// document.getElementById('btnCadastrar')
-//     .addEventListener('click', cadastrarUser)
