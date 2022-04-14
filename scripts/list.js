@@ -6,7 +6,6 @@ function infoDosUser(){
  }
  
  
-
  /**
  * Pedi os dados de cadastro do usuário.
  * @param {string} tokenDoUsuario Token JWT da autenticação do usuário.
@@ -41,7 +40,6 @@ function infoDosUser(){
             console.log(`GET pedirInformacoesDoUsuario() ${JSON.stringify(respostaDoServidorEmJSON)}`);
             // pedirTodasTarefas();
         });
-
 }
 
 
@@ -81,25 +79,21 @@ function updadeTabela(){
 }
 
 
-
 function criarLista(tarefas) {
     let listaHTML = document.createElement('div')
 
     listaHTML.innerHTML = `
-    <div class="tareafasTODO">
-    <ul>
-     <li>${tarefas.description}</li>
-     <li>${tarefas.completed}</li>
-     <li>${tarefas.createdAt}</li>
+    <div class="tarefasTODO">
+    <ul class="tarefaAdicionada">
+     <li class="descricaoTarefa">${tarefas.description}</li>
+     <li class="checkTarefa">${tarefas.completed}</li>
+     <li class="dataTarefa">${tarefas.createdAt}</li>
     </ul>
-    <button  class="button green" id="delete-">\u00D7</button>
-     </div>
+    <button class="buttonDelete" id="delete-">\u00D7</button>
+    </div>
      `
     
-    document.querySelector('#listaTarefas').appendChild(listaHTML)
-   
-
-
+    document.querySelector('#listaTarefas').appendChild(listaHTML)   
 }
 
 function criarUmaTarefa(corpoDaTarefa) {
@@ -140,14 +134,12 @@ function adcTarefa(){
         "completed": false,
         "userId": 1,
         "createdAt": Date.now
-      }
+    }
 
       criarUmaTarefa(corpoDaTarefa)
       pedirTodasTarefas()
       limparCampo()
-      updadeTabela()
-      
-    
+      updadeTabela()       
 }
 
 const limparTarefas = () => {
@@ -165,7 +157,6 @@ const limparCampo = ()=>{
 
 document.getElementById('btnAdicionar')
     .addEventListener('click', adcTarefa)
-
     
     pedirTodasTarefas();    
     updadeTabela()

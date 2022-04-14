@@ -22,13 +22,9 @@ h1 {
 .list-container {
   background-color: #fff;
   margin: 50px auto;
-  width: 700px;
+  width: 800px;
   border-radius: 20px;
   padding: 20px;
-}
-
-input { 
-  font-size: 18px;
 }
 
 .input-container, .adicionar {
@@ -36,11 +32,12 @@ input {
 }
 
 .tarefa {
+  font-size: 18px;
   padding: 5px;
-  width: 500px;
+  width: 500px; 
 }
 
-.adicionar {
+#btnAdicionar {
   padding: 10px;
   background-color: #cf7712;
   color: #040928;
@@ -50,7 +47,53 @@ input {
   font-size: 14px;
 }
 
-.tareafasTODO{
+div.tarefasTODO {
+  border-radius: 25px 5px;
+  /* text-transform:capitalize; */
+  margin: 8px 8px;
+  background-color: #cf7712;
+  width: 200px;
+  float: left;
+  height: 180px;
+  text-align: center;
+}
+
+.tarefaAdicionada {
+  list-style-type: none;
+  padding: 0;
+  padding: 10px 0 10px 0;  
+}
+
+/* <li class="descricaoTarefa">${tarefas.description}</li>
+<li class="checkTarefa">${tarefas.completed}</li>
+<li class="dataTarefa">${tarefas.createdAt}</li> */
+
+.descricaoTarefa {
+  word-spacing: -1px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.checkTarefa {
+  text-transform:capitalize;
+  font-size: 15px;
+  margin-top: 30px;
+}
+
+.dataTarefa {
+  font-size: 14px;
+  text-align:center;  
+}
+
+.buttonDelete {
+  background-color: #040928;
+  color: #ffffff;
+  padding: 5px;
+  width: 50px;
+  border-radius: 20px;
+}
+
+/* .tarefasTODO{
   background-color: rgb(229, 203, 34);
   box-shadow: rgba(15, 15, 15,0.1) 0px 0px 0px 1px,
 rgba(15,15, 15, 0.1) 0px 2px 4px;
@@ -61,4 +104,4 @@ position:relative;
 cursor: pointer;
 margin: 10px;
 display: flex;
-}
+} */
