@@ -5,7 +5,7 @@ function infoDosUser(){
      pedirInformacoesDoUsuario(tokenDoUsuario)
  }
  
- infoDosUser()
+ 
 
  /**
  * Pedi os dados de cadastro do usuário.
@@ -39,7 +39,7 @@ function infoDosUser(){
             
             // Apresentando resultado final no console.log().
             console.log(`GET pedirInformacoesDoUsuario() ${JSON.stringify(respostaDoServidorEmJSON)}`);
-            pedirTodasTarefas();
+            // pedirTodasTarefas();
         });
 
 }
@@ -66,31 +66,39 @@ function pedirTodasTarefas() {
         })
         .then(function (respostaDoServidorEmJSON) {
 
-            localStorage.setItem('tarefas', JSON.stringify(respostaDoServidorEmJSON))
+            localStorage.setItem('tarefas', JSON.stringify(respostaDoServidorEmJSON)) ?? []
             
             // Resultado da promessa convertida em JSON. 
             console.log('GET pedirTodasTarefas() \n', respostaDoServidorEmJSON)
-            criarLista(respostaDoServidorEmJSON)
+            // criarLista(respostaDoServidorEmJSON)
         });
 }
 
-function criarLista(listaDeTarefas) {
-    let listaHTML = document.querySelector("#listaTarefas");
+function updadeTabela(){
+    limparTarefas()
+    const tarefas = JSON.parse(localStorage.getItem("tarefas")) ?? []
+    tarefas.forEach(criarLista)
+}
 
-    listaHTML.innerHTML = ''
 
-    listaDeTarefas.map(function (publicacao) {
-        
-        listaHTML.style = "color: white"
 
-        listaHTML.innerHTML +=
-            `<li>
-                ${publicacao.description}
-                ${' - '}
-                ${publicacao.createdAt}
-            </li>`
-        
-    });
+function criarLista(tarefas) {
+    let listaHTML = document.createElement('div')
+
+    listaHTML.innerHTML = `
+    <div class="tareafasTODO">
+    <ul>
+     <li>${tarefas.description}</li>
+     <li>${tarefas.completed}</li>
+     <li>${tarefas.createdAt}</li>
+    </ul>
+    <button  class="button green" id="delete-">\u00D7</button>
+     </div>
+     `
+    
+    document.querySelector('#listaTarefas').appendChild(listaHTML)
+   
+
 
 }
 
@@ -135,9 +143,20 @@ function adcTarefa(){
       }
 
       criarUmaTarefa(corpoDaTarefa)
+      pedirTodasTarefas()
       limparCampo()
-      pedirTodasTarefas();
+      updadeTabela()
+      
+    
 }
+
+const limparTarefas = () => {
+    const todoList = document.getElementById('listaTarefas');
+    while (todoList.firstChild) {
+        todoList.removeChild(todoList.lastChild);
+    }
+}
+
 
 const limparCampo = ()=>{
     const campos = document.getElementById('descTarefa')
@@ -146,3 +165,7 @@ const limparCampo = ()=>{
 
 document.getElementById('btnAdicionar')
     .addEventListener('click', adcTarefa)
+
+    
+    pedirTodasTarefas();    
+    updadeTabela()
