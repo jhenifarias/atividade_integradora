@@ -93,6 +93,11 @@ div.tarefasTODO {
   border-radius: 20px;
 }
 
+.user-info{
+  color: #ffffff;
+  text-align: center;
+}
+
 /* .tarefasTODO{
   background-color: rgb(229, 203, 34);
   box-shadow: rgba(15, 15, 15,0.1) 0px 0px 0px 1px,

@@ -2,9 +2,16 @@ const API_URL = 'https://ctd-todo-api.herokuapp.com/v1';
 
 function infoDosUser(){
     tokenDoUsuario = localStorage.getItem('token')
-     pedirInformacoesDoUsuario(tokenDoUsuario)
+    pedirInformacoesDoUsuario(tokenDoUsuario)
+    let dadosUser = JSON.parse(localStorage.getItem('@User')) ?? [] 
+    let userHTML = document.createElement('div')
+
+    userHTML.innerHTML = `
+    <label class="userAdicionado" > Usuário: ${dadosUser.firstName} ${dadosUser.lastName} - e-mail: ${dadosUser.email}  
+     </label>
+     `
+    document.querySelector('.user-info').appendChild(userHTML)  
  }
- 
  
  /**
  * Pedi os dados de cadastro do usuário.
@@ -33,12 +40,11 @@ function infoDosUser(){
         .then(function (respostaDoServidorEmJSON) {
 
             
-            localStorage.setItem('@User', respostaDoServidorEmJSON)
-
-            
+            localStorage.setItem('@User', JSON.stringify(respostaDoServidorEmJSON));
+         
             // Apresentando resultado final no console.log().
             console.log(`GET pedirInformacoesDoUsuario() ${JSON.stringify(respostaDoServidorEmJSON)}`);
-            // pedirTodasTarefas();
+
         });
 }
 
@@ -79,18 +85,17 @@ function updadeTabela(){
     tarefas.forEach(criarLista)
 }
 
-
 function criarLista(tarefas) {
     let listaHTML = document.createElement('div')
 
     listaHTML.innerHTML = `
     <div class="tarefasTODO">
-    <ul class="tarefaAdicionada" id="${tarefas.id}">
-     <li class="descricaoTarefa">${tarefas.description}</li>
-     <li class="checkTarefa"><input type="checkbox" id="completa" name="completa" ${tarefas.completed ? 'checked' : ''}></li>
-     <li class="dataTarefa">${tarefas.createdAt.substr(0, 10).split('-').reverse().join('/')}</li>
-    </ul>
     <button class="buttonDelete" id="delete" onclick="deletarUmaTarefa(${tarefas.id})">\u00D7</button>
+    <ul class="tarefaAdicionada">
+     <li class="descricaoTarefa" id="desc${tarefas.id}" >${tarefas.description}</li>
+     <li class="dataTarefa">${tarefas.createdAt.substr(0, 10).split('-').reverse().join('/')}</li>  
+     <li class="checkTarefa"><input type="checkbox" id="${tarefas.id}" onclick="atzTarefa(${tarefas.id})"  ${tarefas.completed ? 'checked' : ''}></li>
+     </ul>
     </div>
      `
     
@@ -159,6 +164,37 @@ function deletarUmaTarefa(idDaTarefa) {
 
 }
 
+function atualizarUmaTarefa(idDaTarefa, corpoDaTarefa) {
+
+    var configuracoes = {
+        method: 'PUT',
+        body: JSON.stringify(corpoDaTarefa),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+            'authorization': localStorage.getItem('token')
+        },
+    }
+    
+    // URL(https://jsonplaceholder.typicode.com/posts/1)
+    fetch(`${API_URL}/tasks/${idDaTarefa}`, configuracoes)
+        .then(function (respostaDoServidor) {
+                    
+            // Retorno apenas dos dados convertidos em JSON.
+            var JSON = respostaDoServidor.json();
+            // Nota: Você pode ter acesso ao corpo da informação sem convertê-la:
+            // respostaDoServidor.body(); 
+
+            // Retorno da promessa convertida em JSON.
+            return JSON;
+        })
+        .then(function (respostaDoServidorEmJSON) {
+            
+            // Resultado da promessa convertida em JSON. 
+            console.log('PATCH atualizarUmaTarefa() \n', respostaDoServidorEmJSON)
+            pedirTodasTarefas()
+        });
+}
+
 function adcTarefa(){
     const corpoDaTarefa = {
         "id": 1,
@@ -169,8 +205,20 @@ function adcTarefa(){
     }
       criarUmaTarefa(corpoDaTarefa)
       pedirTodasTarefas()
-      git 
       updadeTabela()       
+}
+
+function atzTarefa(idDaTarefa){
+    
+    let checkbox = document.getElementById(idDaTarefa);
+    let tarefa = document.getElementById('desc' + idDaTarefa);
+    
+    const corpoDaTarefa = {
+        "description": tarefa.innerText,
+        "completed": checkbox.checked
+    }
+    atualizarUmaTarefa(idDaTarefa, corpoDaTarefa);
+
 }
 
 const limparTarefas = () => {
@@ -190,4 +238,5 @@ document.getElementById('btnAdicionar')
     .addEventListener('click', adcTarefa)
     
     pedirTodasTarefas();    
-    updadeTabela()
+    updadeTabela();
+    infoDosUser();
