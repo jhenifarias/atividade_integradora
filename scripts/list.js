@@ -42,7 +42,6 @@ function infoDosUser(){
         });
 }
 
-
 function pedirTodasTarefas() {
 
     let configuracoes = {
@@ -69,6 +68,8 @@ function pedirTodasTarefas() {
             // Resultado da promessa convertida em JSON. 
             console.log('GET pedirTodasTarefas() \n', respostaDoServidorEmJSON)
             // criarLista(respostaDoServidorEmJSON)
+            limparCampo()
+            updadeTabela()
         });
 }
 
@@ -84,12 +85,12 @@ function criarLista(tarefas) {
 
     listaHTML.innerHTML = `
     <div class="tarefasTODO">
-    <ul class="tarefaAdicionada">
+    <ul class="tarefaAdicionada" id="${tarefas.id}">
      <li class="descricaoTarefa">${tarefas.description}</li>
-     <li class="checkTarefa">${tarefas.completed}</li>
-     <li class="dataTarefa">${tarefas.createdAt}</li>
+     <li class="checkTarefa"><input type="checkbox" id="completa" name="completa" ${tarefas.completed ? 'checked' : ''}></li>
+     <li class="dataTarefa">${tarefas.createdAt.substr(0, 10).split('-').reverse().join('/')}</li>
     </ul>
-    <button class="buttonDelete" id="delete-">\u00D7</button>
+    <button class="buttonDelete" id="delete" onclick="deletarUmaTarefa(${tarefas.id})">\u00D7</button>
     </div>
      `
     
@@ -127,6 +128,37 @@ function criarUmaTarefa(corpoDaTarefa) {
         });
 }
 
+function deletarUmaTarefa(idDaTarefa) {
+
+    var configuracoes = {
+        method: 'DELETE',
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+            'authorization': localStorage.getItem('token')
+        },
+    }
+
+    // URL(https://jsonplaceholder.typicode.com/posts/1)
+    fetch(`${API_URL}/tasks/${idDaTarefa}`, configuracoes)
+        .then(function (respostaDoServidor) {
+                        
+            // Retorno apenas dos dados convertidos em JSON.
+            var JSON = respostaDoServidor.json();
+            // Nota: Você pode ter acesso ao corpo da informação sem convertê-la:
+            // respostaDoServidor.body(); 
+
+            // Retorno da promessa convertida em JSON.
+            return JSON;
+        })
+        .then(function (respostaDoServidorEmJSON) {
+                
+            // Resultado da promessa convertida em JSON. 
+            console.log('DELETE deletarUmaTarefa() \n',respostaDoServidorEmJSON)
+            pedirTodasTarefas()
+        });
+
+}
+
 function adcTarefa(){
     const corpoDaTarefa = {
         "id": 1,
@@ -135,10 +167,9 @@ function adcTarefa(){
         "userId": 1,
         "createdAt": Date.now
     }
-
       criarUmaTarefa(corpoDaTarefa)
       pedirTodasTarefas()
-      limparCampo()
+      git 
       updadeTabela()       
 }
 
