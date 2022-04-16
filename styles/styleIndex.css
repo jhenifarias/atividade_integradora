@@ -84,3 +84,8 @@ form .input-container input {
   text-align: right;
   text-decoration: none;
 }
+
+span{
+  color: red;
+  text-align: center;
+ }

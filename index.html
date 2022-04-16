@@ -12,36 +12,37 @@
 
   <body>
     <div class="form-container">
-        <form method="post" onsubmit="validarCredenciaisDoUsuario(event)">
-      <h1>Faça seu login</h1>
-      <div class="input-container">
-        <label for="name" class="name">Login</label>
-        <input
-          id="LoginEmail"
-          type="email"
-          placeholder="Digite seu e-mail ou nome de usuário"
-          class="name"
-          name="LoginEmail">
-      </div>
-
-      <div class="input-container">
-        <label for="password" class="password">Senha</label>
-        <input
-          id="LoginPassword"
-          type="password"
-          placeholder="Senha com 8 dígitos"
-          class="password"
-          password="password"/>
-      </div>
-
-      <div class="options-container">
-        <div class="options-checkbox">
-          <input type="checkbox" name="remember" id="remember"/>
-          <label for="remember">Lembre-me</label>
+      <form id="appToForm">
+        <span class="msgErro"></span>
+        <h1>Faça seu login</h1>
+        <div class="input-container">
+          <label for="name" class="name">Login</label>
+          <input
+            id="LoginEmail"
+            type="email"
+            placeholder="Digite seu e-mail ou nome de usuário"
+            class="name"
+            name="LoginEmail">
         </div>
-        <a href="/cadastro.html" class="create-account">Criar uma conta</a>
-      </div>
 
+        <div class="input-container">
+          <label for="password" class="password">Senha</label>
+          <input
+            id="LoginPassword"
+            type="password"
+            placeholder="Senha com 8 dígitos"
+            class="password"
+            password="password"/>
+        </div>
+
+        <div class="options-container">
+          <div class="options-checkbox">
+            <input type="checkbox" name="remember" id="remember"/>
+            <label for="remember">Lembre-me</label>
+          </div>
+          <a href="/cadastro.html" class="create-account">Criar uma conta</a>
+        </div>
+        
         <input id="btnLogar" type="submit" value="Entrar">
       </form>
     </div>
