@@ -93,7 +93,18 @@
         <ul class="tarefaAdicionada">
         <li class="descricaoTarefa" id="desc${tarefas.id}" >${tarefas.description}</li>
         <li class="dataTarefa">${tarefas.createdAt.substr(0, 10).split('-').reverse().join('/')}</li>  
-        <li class="checkTarefa"><input type="checkbox" id="${tarefas.id}" onclick="atzTarefa(${tarefas.id})"  ${tarefas.completed ? 'checked' : ''}></li>
+        
+        <li>
+        <div class="checkTarefa">
+            <label class="selecionar">
+                <div class="selecionarAgrupado">
+                <input type="checkbox" id="${tarefas.id}" onclick="atzTarefa(${tarefas.id})" ${tarefas.completed ? 'checked' : ''}>
+                <span class="selecionarBotao"></span>
+                </div>
+            </label>
+        </div>
+        </li>
+        
         </ul>
         </div>
         `
