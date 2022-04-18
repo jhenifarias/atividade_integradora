@@ -73,15 +73,15 @@ form .input-container input {
   margin: 20px auto;
 }
 
-.options-container .options-checkbox, a {
+.options-container a {
   display: inline-block;
-  width: 48%;
+  width: 100%;
 }
 
 .options-container a {
   color: #cf7712;
   font-weight: bold;
-  text-align: right;
+  text-align: center;
   text-decoration: none;
 }
 

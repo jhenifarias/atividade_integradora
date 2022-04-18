@@ -81,6 +81,9 @@
     function updadeTabela(){
         limparTarefas()
         const tarefas = JSON.parse(localStorage.getItem("tarefas")) ?? []
+        tarefas.sort(function(x, y) {
+            return Number(y.completed) - Number(x.completed);
+         });
         tarefas.forEach(criarLista)
     }
 
@@ -139,6 +142,7 @@
                 
                 // Resultado da promessa convertida em JSON. 
                 console.log('POST criarUmaTarefa() \n', respostaDoServidorEmJSON)
+                pedirTodasTarefas()
             });
     }
 
@@ -212,9 +216,7 @@
             "userId": 1,
             "createdAt": Date.now
         }
-        criarUmaTarefa(corpoDaTarefa)
-        pedirTodasTarefas()
-        updadeTabela()       
+        criarUmaTarefa(corpoDaTarefa)      
     }
 
     function atzTarefa(idDaTarefa){
