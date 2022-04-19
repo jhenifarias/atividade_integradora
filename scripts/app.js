@@ -124,7 +124,7 @@ window.onload = function() {
     }
 
     function redirecionarPagina() {
-        var URL_LISTA = "/list.html";
+        var URL_LISTA = "./list.html";
         window.location.href = URL_LISTA;
     };
 
