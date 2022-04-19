@@ -10,7 +10,7 @@
         let dadosUser = JSON.parse(localStorage.getItem('@User'))
         if (dadosUser !== null) { 
             let userHTML = document.getElementById('labelUser');
-            userHTML.innerText = `Usuário:  ${dadosUser.firstName} ${dadosUser.lastName} - e-mail: ${dadosUser.email} `
+            userHTML.innerText = `Usuário:  ${dadosUser.firstName} ${dadosUser.lastName} - E-mail: ${dadosUser.email} `
             pedirTodasTarefas();  
         }
     }
