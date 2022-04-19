@@ -47,7 +47,7 @@
                 alert('Usuário criado com sucesso!')
 
                 let URL_LISTA = "./index.html";
-                window.location.pathname = URL_LISTA;
+                window.location.href = URL_LISTA;
                 
                 // Resultado da promessa convertida em JSON.
                 console.log('POST criarUmUsuario() \n', respostaDoServidorEmJSON)
