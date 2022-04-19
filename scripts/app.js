@@ -140,7 +140,7 @@ window.onload = function() {
         window.focus();
         campos = document.getElementsByTagName("input");
         for (var x=0; x < campos.length; x++) {
-            if (campos[x].id != "btnCadastrar"){
+            if (campos[x].id != "btnCadastrar") or (campos[x].id != "btnLogar"){
                 campos[x].value = "";
             }
         }
