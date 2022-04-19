@@ -55,7 +55,7 @@ window.onload = function() {
             .then(function (respostaDoServidor) {
                 //console.log(respostaDoServidor.ok);
                 if (!respostaDoServidor.ok) {
-                throw new Error('Login ou senha incorretos!');
+                    throw new Error('Login ou senha incorretos!');
                 } 
                 //console.log(respostaDoServidor.status);
 
@@ -77,7 +77,6 @@ window.onload = function() {
                 // Resultado da promessa convertida em JSON. 
                 localStorage.setItem('token', tokenDoUsuario);
                 pedirInformacoesDoUsuario(tokenDoUsuario);
-                redirecionarPagina();
                 
             })
             .catch(function(Error) { 
@@ -112,11 +111,13 @@ window.onload = function() {
             })
             .then(function (respostaDoServidorEmJSON) {
 
-                
-                localStorage.setItem('@User', respostaDoServidorEmJSON)
+                localStorage.setItem('@User', JSON.stringify(respostaDoServidorEmJSON));
 
                 // Apresentando resultado final no console.log().
                 console.log(`GET pedirInformacoesDoUsuario() ${JSON.stringify(respostaDoServidorEmJSON)}`);
+                if (respostaDoServidorEmJSON != null){
+                    redirecionarPagina();
+                };
 
             });
 

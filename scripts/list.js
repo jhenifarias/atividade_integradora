@@ -1,16 +1,18 @@
+    window.onload = function() {
+        infoDosUser();  
+        updadeTabela();
+    }
+
     const API_URL = 'https://ctd-todo-api.herokuapp.com/v1';
 
     function infoDosUser(){
         tokenDoUsuario = localStorage.getItem('token')
-        pedirInformacoesDoUsuario(tokenDoUsuario)
-        let dadosUser = JSON.parse(localStorage.getItem('@User')) ?? [] 
-        let userHTML = document.createElement('div')
-
-        userHTML.innerHTML = `
-        <label class="userAdicionado" > Usuário: ${dadosUser.firstName} ${dadosUser.lastName} - e-mail: ${dadosUser.email}  
-        </label>
-        `
-        document.querySelector('.user-info').appendChild(userHTML)  
+        let dadosUser = JSON.parse(localStorage.getItem('@User'))
+        if (dadosUser !== null) { 
+            let userHTML = document.getElementById('labelUser');
+            userHTML.innerText = `Usuário:  ${dadosUser.firstName} ${dadosUser.lastName} - e-mail: ${dadosUser.email} `
+            pedirTodasTarefas();  
+        }
     }
     
     /**
@@ -82,7 +84,7 @@
         limparTarefas()
         const tarefas = JSON.parse(localStorage.getItem("tarefas")) ?? []
         tarefas.sort(function(x, y) {
-            return Number(y.completed) - Number(x.completed);
+            return Number(x.completed) - Number(y.completed);
          });
         tarefas.forEach(criarLista)
     }
@@ -103,11 +105,12 @@
                 <div class="selecionarAgrupado">
                 <input type="checkbox" id="${tarefas.id}" onclick="atzTarefa(${tarefas.id})" ${tarefas.completed ? 'checked' : ''}>
                 <span class="selecionarBotao"></span>
+                
                 </div>
             </label>
         </div>
         </li>
-        
+        <li class="situacao">${tarefas.completed ? "Finalizada" : "Pendente"}</li>
         </ul>
         </div>
         `
@@ -244,9 +247,12 @@
         campos.value = ""
     }
 
+    function fecharSessao(){
+        window.localStorage.clear();
+        window.location.href = '/index.html';
+    }
+
     document.getElementById('btnAdicionar')
-        .addEventListener('click', adcTarefa)
+        .addEventListener('click', adcTarefa);
         
-    pedirTodasTarefas();    
-    updadeTabela();
-    infoDosUser();
+
