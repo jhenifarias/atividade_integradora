@@ -53,10 +53,12 @@ input[type="submit"], #btnLogar {
   color: #000000;
   font-weight: bold;  
   text-transform: uppercase;
+  cursor:pointer;
 }
 
 form .input-container input::placeholder {
   font-size: 15px;
+  color: #5f5e5e;
 }
 
 .input-container {

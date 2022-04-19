@@ -13,7 +13,6 @@ body {
   background-color: #040928;
   font-family: 'Roboto', sans-serif;
   text-align: center;
-
 }
 
 h1 {
@@ -26,8 +25,7 @@ h1 {
   margin: 30px auto;
   width: 800px;
   border-radius: 20px;
-  padding: 15px 0;
-  
+  padding: 15px 0;  
 }
 
 .input-container, .adicionar {
@@ -49,6 +47,7 @@ h1 {
   font-weight: bold;
   font-size: 14px;
   border-radius: 5px;
+  cursor:pointer;
 }
 
 div.tarefasTODO {
@@ -59,15 +58,13 @@ div.tarefasTODO {
   width: 200px;
   float: left;
   height: 200px;
-  text-align: center; 
-
+  text-align: center;
 }
 
 .tarefaAdicionada {
   list-style-type: none;
   padding: 0;
-  padding: 10px 0 10px 0;  
-
+  padding: 10px 0 10px 0;
 }
 
 .descricaoTarefa {
@@ -103,25 +100,10 @@ div.tarefasTODO {
   display: inline-block;
 }
 
-/* .checkTarefa {
-  display: block;
-  position: relative;
-  padding: 20px;
-  width: 200px;
-  margin-top: 5px;
-}
-
-input[type="checkbox" i] {
-  width: 20px;
-  height: 20px;
-  position: relative;
-} */
-
 .selecionar {
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
 }
 
 .selecionar .selecionarAgrupado{
@@ -181,6 +163,7 @@ input[type="checkbox" i] {
   font-weight: bold;
   font-size: 14px;
   border-radius: 5px;
+  cursor:pointer;
 }
 
 .labelUser { 
@@ -190,7 +173,6 @@ input[type="checkbox" i] {
 .div-buttonLogout {
   display: inline-block;
   position: absolute;
-  /* bottom: 0; */
   right: 0;
   margin-right: 40px;
 }
